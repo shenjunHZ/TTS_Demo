@@ -1,0 +1,12 @@
+/home/shenjun/tools/cmake-3.12.2/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ -G "CodeBlocks - Unix Makefiles" /home/shenjun/development/ttsDemo
+-- Leak Sanitizer is OFF
+-- Address Sanitizer is OFF
+-- Undefined Behavior Sanitizers are OFF
+-- Thread sanitizers is OFF
+-- kdDemo
+-- kdDemo
+-- Configuring logger
+-- Configuring timer
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32

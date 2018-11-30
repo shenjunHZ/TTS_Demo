@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="timer"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\make\;CMake Files\make\gnu\;CMake Files\src\;CMake Files\src\logger\;CMake Files\src\timer\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer">
+				<Option output="/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/libtimer.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DENABLE_LOGGING"/>
+					<Add directory="/home/shenjun/development/ttsDemo/tts/include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src"/>
+					<Add directory="/home/shenjun/tools/boost_1_65_0/arm/include"/>
+					<Add directory="/home/shenjun/tools/libzmq/include"/>
+					<Add directory="/home/shenjun/tools/spdlog-1.x/include"/>
+					<Add directory="/home/shenjun/tools/alsa-lib/arm-alsa/include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src/../include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src/timer/include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src/logger/include"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include/c++/5.4.1"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include/c++/5.4.1/arm-linux-gnueabihf/."/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include/c++/5.4.1/backward"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/include"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/include-fixed"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../arm-linux-gnueabihf/libc/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 timer"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer/fast">
+				<Option output="/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/libtimer.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DENABLE_LOGGING"/>
+					<Add directory="/home/shenjun/development/ttsDemo/tts/include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src"/>
+					<Add directory="/home/shenjun/tools/boost_1_65_0/arm/include"/>
+					<Add directory="/home/shenjun/tools/libzmq/include"/>
+					<Add directory="/home/shenjun/tools/spdlog-1.x/include"/>
+					<Add directory="/home/shenjun/tools/alsa-lib/arm-alsa/include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src/../include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src/timer/include"/>
+					<Add directory="/home/shenjun/development/ttsDemo/src/logger/include"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include/c++/5.4.1"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include/c++/5.4.1/arm-linux-gnueabihf/."/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include/c++/5.4.1/backward"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/include"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/include-fixed"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/5.4.1/../../../../arm-linux-gnueabihf/include"/>
+					<Add directory="/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/../arm-linux-gnueabihf/libc/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 timer/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/include/DefaultTimerService.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/include/IOService.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/include/Timer.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/include/TimerIdGenerator.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/include/TimerService.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/src/DefaultTimerService.cpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/src/IOService.cpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/make/gnu/sanitizers.cmake">
+			<Option virtualFolder="CMake Files\make\gnu\"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\src\"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/logger/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\src\logger\"/>
+		</Unit>
+		<Unit filename="/home/shenjun/development/ttsDemo/src/timer/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\src\timer\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

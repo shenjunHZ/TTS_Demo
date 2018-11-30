@@ -7,7 +7,7 @@
 #include <memory>
 #include <mutex>
 #include "logger/Logger.hpp"
-#include "AppConfiguration.hpp"
+#include "configurations/AppConfiguration.hpp"
 #include "ClientReceiver.hpp"
 #include "KDTTSService.hpp"
 #include "IOService.hpp"

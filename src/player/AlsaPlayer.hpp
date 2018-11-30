@@ -6,7 +6,7 @@
 
 #include <memory>
 #include "logger/Logger.hpp"
-#include "AppConfiguration.hpp"
+#include "configurations/AppConfiguration.hpp"
 
 extern "C"
 {

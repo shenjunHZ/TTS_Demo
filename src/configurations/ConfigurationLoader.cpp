@@ -19,7 +19,9 @@ namespace
             (configuration::clientAddress, value<std::string>()->default_value("192.168.1.11"), "Client Address")
             (configuration::kdAppId, value<std::string>()->default_value("5ba5af09"), "KD TTS Register Id")
             (configuration::connectTimer, value<unsigned>()->default_value(10), "connect timer period")
-            (configuration::ttsWorkDir, value<std::string>()->default_value("."), "tts work dir");
+            (configuration::ttsWorkDir, value<std::string>()->default_value("."), "tts work dir")
+            (configuration::wavFilePath, value<std::string>()->default_value("."), "wav output file path")
+            (configuration::wavFileName, value<std::string>()->default_value("ttsAudio.wav"), "wav file name");
 
         return description;
     }

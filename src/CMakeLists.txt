@@ -23,14 +23,14 @@ add_executable(${EXECUTABLE_NAME} ${SOURCES})
 target_link_libraries(${EXECUTABLE_NAME}
         PRIVATE
             ${LIBTTS}
-            ${LIBZMQ}
+            ${LIBASOUND}
+            #libasound
             #${Boost_LIBRARIES}
             boost_program_options
             boost_thread
             boost_system
             logger
             timer
-            libasound.so
         )
 
 ADD_SUBDIRECTORY(logger)

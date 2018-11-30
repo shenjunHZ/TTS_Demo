@@ -17,6 +17,11 @@ namespace endpoints
         return setsockopt(sockfd, level, optname, optval, optlen);
     };
 
+    int SocketSysCall::wrapper_getsockopt(int sockfd, int level, int optname, void* optval, socklen_t* optlen)
+    {
+        return getsockopt(sockfd, level, optname, optval, optlen);
+    }
+
     // close socket
     int SocketSysCall::wrapper_close(int fd)
     {

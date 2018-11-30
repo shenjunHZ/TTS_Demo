@@ -6,7 +6,7 @@
 
 #include <queue>
 #include "logger/LoggerFwd.hpp"
-#include "AppConfiguration.hpp"
+#include "configurations/AppConfiguration.hpp"
 #include "socket/ClientSocket.hpp"
 #include "socket/ISocketSysCall.hpp"
 #include "socket/IDataListener.hpp"

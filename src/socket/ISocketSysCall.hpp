@@ -11,6 +11,7 @@ namespace endpoints
     public:
         virtual int wrapper_socket(int, int, int) = 0;
         virtual int wrapper_setsockopt(int, int, int, const void*, socklen_t) = 0;
+        virtual int wrapper_getsockopt(int, int, int, void*, socklen_t*) = 0;
         virtual int wrapper_close(int) = 0;
         virtual int wrapper_tcp_bind(int, struct sockaddr*, socklen_t) = 0;
         virtual int wrapper_tcp_connect(int, struct sockaddr*, socklen_t) = 0;

@@ -21,11 +21,11 @@ namespace player
         iconv_close(m_iconv);
     }
 
-    int CodeConverter::decodeCoverter(char* input, long unsigned int inLen,
-                      char* output, long unsigned int outLen)
+    int CodeConverter::decodeCoverter(char* input, unsigned int inLen,
+                      char* output, unsigned int outLen)
     {
-        return iconv(m_iconv, &input, static_cast<size_t*>(&inLen),
-        &output, static_cast<size_t*>(&outLen));
+        return iconv(m_iconv, &input, reinterpret_cast<size_t*>(&inLen),
+        &output, reinterpret_cast<size_t*>(&outLen));
     }
 
     std::wstring CodeConverter::stringToWstring(const std::string& strData)

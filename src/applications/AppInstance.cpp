@@ -27,6 +27,24 @@ namespace
         return ".";
     }
 
+    std::string getWavFileName(const configuration::AppConfiguration& config)
+    {
+        if(config.find(configuration::wavFileName) != config.end())
+        {
+            return config[configuration::wavFileName].as<std::string>();
+        }
+        return "ttsAudio.wav";
+    }
+
+    std::string getWavFilePath(const configuration::AppConfiguration& config)
+    {
+        if(config.find(configuration::wavFilePath) != config.end())
+        {
+            return config[configuration::wavFilePath].as<std::string>();
+        }
+        return ".";
+    }
+
     std::atomic_bool keep_running(true);
 }
 
@@ -42,9 +60,11 @@ namespace applications
         std::string strId = getKDAppId(config);
         configuration::TTSLoginParams loginParams {strId, strDir};
         configuration::TTSSessionParams sessionParams;
-        m_kdTTSService = std::make_unique<KDTTSService>(logger, loginParams, sessionParams);
+        std::string strFileName = getWavFileName(config);
+        m_kdTTSService = std::make_unique<KDTTSService>(logger, loginParams, sessionParams, strFileName);
         configuration::wave_pcm_hdr wavHdr;
-        m_alsaPlayer = std::make_unique<player::AlsaPlayer>(logger, wavHdr, "/home/shenjun/development/kdDemo/cmake-build-kddemo/src/ttsAudio.wav");//loginParams.work_dir + "/ttsAudio.wav");
+        std::string strFilePath = getWavFilePath(config);
+        m_alsaPlayer = std::make_unique<player::AlsaPlayer>(logger, wavHdr, strFilePath + strFileName);//loginParams.work_dir + "/ttsAudio.wav");
 
         initService();
     }
