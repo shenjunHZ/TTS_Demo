@@ -6,11 +6,12 @@
 namespace applications
 {
     KDTTSService::KDTTSService(Logger& logger, configuration::TTSLoginParams& loginParams,
-                               configuration::TTSSessionParams& sessionParams)
+                               configuration::TTSSessionParams& sessionParams, const std::string& fileName)
         : m_loginParams{loginParams}
         , m_sessionParams{sessionParams}
         , m_logger{logger}
         , m_bLoggerSuccess{false}
+        , m_fileName{fileName}
     {
 
     };
@@ -54,7 +55,7 @@ namespace applications
         return true;
     }
 
-    bool KDTTSService::TTSCompound(const std::string& srcTextContext, const std::string& desFileName)
+    bool KDTTSService::TTSCompound(const std::string& srcTextContext)
     {
         int          ret          = -1;
         FILE*        fp           = nullptr;
@@ -67,16 +68,16 @@ namespace applications
 
         LOG_INFO_MSG(m_logger, "Start to compound.");
 
-        if (0 == srcTextContext.length() || 0 == desFileName.size())
+        if (0 == srcTextContext.length() || 0 == m_fileName.size())
         {
             LOG_ERROR_MSG("params is error!");
             return false;
         }
 
-        fp = fopen(desFileName.c_str(), "wb");
+        fp = fopen(m_fileName.c_str(), "wb");
         if (nullptr == fp)
         {
-            LOG_ERROR_MSG("open {} error.", desFileName.c_str());
+            LOG_ERROR_MSG("open {} error.", m_fileName.c_str());
             return false;
         }
         /* 开始合成 */

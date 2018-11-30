@@ -5,7 +5,7 @@
 #pragma once
 
 #include <string>
-#include "AppConfiguration.hpp"
+#include "configurations/AppConfiguration.hpp"
 #include "logger/Logger.hpp"
 #include "configurations/ConfigurationLoader.hpp"
 #include "ITTSService.hpp"
@@ -22,12 +22,12 @@ namespace applications
     {
     public:
         KDTTSService(Logger& logger, configuration::TTSLoginParams& loginParams,
-                     configuration::TTSSessionParams& sessionParams);
+                     configuration::TTSSessionParams& sessionParams, const std::string& fileName);
         ~KDTTSService();
 
         bool loginSDK();
         bool logoutSDK();
-        bool TTSCompound(const std::string& srcTextContext, const std::string& desFileName = "ttsAudio.wav");
+        bool TTSCompound(const std::string& srcTextContext);
 
     private:
         std::string m_sessionID{};
@@ -36,5 +36,6 @@ namespace applications
 
         Logger& m_logger;
         bool m_bLoggerSuccess;
+        std::string m_fileName;
     };
 }

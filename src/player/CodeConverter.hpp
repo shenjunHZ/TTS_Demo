@@ -19,8 +19,8 @@ namespace player
 
         ~CodeConverter();
 
-        int decodeCoverter(char* input, long unsigned int inLen,
-                           char* output, long unsigned int outLen);
+        int decodeCoverter(char* input, unsigned int inLen,
+                           char* output, unsigned int outLen);
 
         std::wstring stringToWstring(const std::string& strData);
         std::string wstringToString(const std::wstring& wstrData);

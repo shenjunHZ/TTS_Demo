@@ -7,7 +7,7 @@
 #include "socket/ClientSocket.hpp"
 #include "logger/Logger.hpp"
 #include "player/CodeConverter.hpp"
-#include "AppConfiguration.hpp"
+#include "configurations/AppConfiguration.hpp"
 #include <boost/exception/diagnostic_information.hpp>
 
 namespace endpoints
@@ -68,7 +68,6 @@ namespace endpoints
     ClientSocket::~ClientSocket()
     {
         LOG_INFO_MSG(m_logger, "Desorying tcp endpoint");
-        m_serverConnected = false;
         m_continueReceiving = false;
         //if(m_dataReceiverThread.joinable())
         //{
@@ -106,6 +105,13 @@ namespace endpoints
 
     void ClientSocket::setTcpSocketOptions(int socketDescriptor, const configuration::TcpConfiguration& tcpConfiguration)
     {
+
+    }
+
+    void ClientSocket::getTcpSocketOptions(int socketDescriptor, tcp_info& tcpInfo, int& infoLen)
+    {
+        m_socketSysCall.wrapper_getsockopt(m_socketfId, IPPROTO_TCP, TCP_INFO,
+                                           &tcpInfo, reinterpret_cast<socklen_t *>(&infoLen));
 
     }
 
@@ -157,10 +163,10 @@ namespace endpoints
                 //reConnectServer();
             //});
 
-            //LOG_ERROR_MSG("tcp connection failed. scocke id: {} Error code : {} status: {}", m_socketfId, std::strerror(errno), connectStatus);
+            LOG_ERROR_MSG("tcp connection failed. scocke id: {} Error code : {} status: {}", m_socketfId, std::strerror(errno), connectStatus);
             return false;
         }
-
+        m_socketClosed = false;
         LOG_INFO_MSG(m_logger, "tcp connection success.");
         return true;
     }
@@ -173,16 +179,12 @@ namespace endpoints
         const int connectStatus = m_socketSysCall.wrapper_tcp_connect(m_socketfId, m_serverAddr.data(), socketLen);
         if(0 != connectStatus)
         {
-            //LOG_ERROR_MSG("tcp connection failed. scocke id: {} Error code : {}", m_socketfId, std::strerror(errno));
+            LOG_ERROR_MSG("tcp connection failed. scocke id: {} Error code : {}", m_socketfId, std::strerror(errno));
             return false;
         }
+        m_socketClosed = false;
         LOG_INFO_MSG(m_logger, "tcp connection success.");
         return true;
-    }
-
-    bool ClientSocket::isConnectServer()
-    {
-        return m_serverConnected;
     }
 
     void ClientSocket::createTcpSocket(IpEndpoint& ipEndpoint)
@@ -202,7 +204,6 @@ namespace endpoints
     // start thread
     void ClientSocket::startDataReceiverThread()
     {
-        m_serverConnected = true;
         m_continueReceiving = true;
         //m_dataReceiverThread = std::thread(&ClientSocket::receiveDataRoutine, this);
         receiveDataRoutine();
@@ -248,6 +249,11 @@ namespace endpoints
                 LOG_ERROR_MSG("epoll_wait failed. Error: {}", std::strerror(errno));
                 continue;
             }
+            //else if(m_socketClosed)
+            {
+                //sleep(5);
+                //connectServer();
+            }
 
             for (int n = 0; n < nfds; ++n)
             {
@@ -271,12 +277,6 @@ namespace endpoints
         msg.msg_iovlen = 1;
 
         const int size = m_socketSysCall.wrapper_tcp_recvmsg(m_socketfId, &msg, 0);
-        if(-1 == size)
-        {
-            const auto& errorMsg = std::string("tcp message recieve failed code : ") + std::strerror(errno);
-            LOG_ERROR_MSG(errorMsg);
-            BOOST_THROW_EXCEPTION(std::runtime_error(errorMsg));
-        }
         if(size > 0)
         {
             LOG_INFO_MSG(m_logger, "Received {} bytes from {} : {}", size,
@@ -288,6 +288,34 @@ namespace endpoints
 
             codeConverter.decodeCoverter(reinterpret_cast<char*>(m_dataBuffer.data()), size, *dataBuffer, size * 2 + 1);
             m_dataListener.onDataMessage(*dataBuffer); // to do gsl
+        }
+        else
+        {
+            tcp_info info;
+            int infoLen = sizeof(info);
+            getTcpSocketOptions(m_socketfId, info, infoLen);
+            LOG_INFO_MSG(m_logger, "socket status: {}", info.tcpi_state);
+
+            if((info.tcpi_state == TCP_ESTABLISHED))
+            {
+               return;
+            }
+            processSocketState(info);
+        }
+    }
+
+    void ClientSocket::processSocketState(const tcp_info& info)
+    {
+        if(TCP_CLOSE_WAIT == info.tcpi_state)
+        {
+            //m_socketSysCall.wrapper_close(m_socketfId);
+            m_socketClosed = true;
+            LOG_DEBUG_MSG("Socket {} close.", m_socketfId);
+        }
+        else
+        {
+            const auto& errorMsg = std::string("tcp message recieve failed code : ") + std::strerror(errno);
+            LOG_ERROR_MSG(errorMsg);
         }
     }
 } // namespace applications

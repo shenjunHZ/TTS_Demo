@@ -12,7 +12,7 @@
 
 #include "logger/LoggerFwd.hpp"
 #include "socket/ISocketSysCall.hpp"
-#include "AppConfiguration.hpp"
+#include "configurations/AppConfiguration.hpp"
 #include "IDataListener.hpp"
 #include "TimerService.hpp"
 #include "configurations/ConfigurationLoader.hpp"
@@ -38,17 +38,18 @@ namespace endpoints
         ~ClientSocket();
 
         void startSocketLink();
-        bool isConnectServer();
 
     private:
         void createTcpSocket(IpEndpoint&);
         void setTcpSocketOptions(int, const configuration::TcpConfiguration&);
+        void getTcpSocketOptions(int socketDescriptor, tcp_info& tcpInfo, int& infoLen);
         void startDataReceiverThread();
         void receiveDataRoutine();
         void receiveDataFromSocket();
         bool connectServer();
         void stopConcreteTimer();
         bool reConnectServer();
+        void processSocketState(const tcp_info& info);
 
         bool setNonblocking(int&);
         void rebindSocketToAnyPort();
@@ -62,7 +63,6 @@ namespace endpoints
         endpoints::ISocketSysCall& m_socketSysCall;
         Logger& m_logger;
 
-        std::atomic<bool> m_serverConnected{false};
         std::atomic<bool> m_continueReceiving{false};
         std::atomic<bool> m_socketClosed{true};
         std::atomic<bool> m_concreteTimerStop{true};

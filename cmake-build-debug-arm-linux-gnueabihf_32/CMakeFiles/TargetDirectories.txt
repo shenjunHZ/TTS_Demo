@@ -1,0 +1,11 @@
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/CMakeFiles/rebuild_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/CMakeFiles/edit_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/CMakeFiles/rebuild_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/CMakeFiles/edit_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/CMakeFiles/kdDemo.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/logger/CMakeFiles/rebuild_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/logger/CMakeFiles/edit_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/logger/CMakeFiles/logger.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/CMakeFiles/rebuild_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/CMakeFiles/edit_cache.dir
+/home/shenjun/development/ttsDemo/cmake-build-debug-arm-linux-gnueabihf_32/src/timer/CMakeFiles/timer.dir

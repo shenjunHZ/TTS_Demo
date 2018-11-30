@@ -13,6 +13,6 @@ namespace applications
 
         virtual bool loginSDK() = 0;
         virtual bool logoutSDK() = 0;
-        virtual bool TTSCompound(const std::string& srcTextContext, const std::string& desFileName) = 0;
+        virtual bool TTSCompound(const std::string& srcTextContext) = 0;
     };
 }

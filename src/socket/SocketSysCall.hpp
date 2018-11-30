@@ -25,6 +25,7 @@ namespace endpoints
     public:
         int wrapper_socket(int, int, int) override;
         int wrapper_setsockopt(int, int, int, const void*, socklen_t) override;
+        int wrapper_getsockopt(int, int, int, void*, socklen_t*) override;
         int wrapper_close(int) override;
         int wrapper_tcp_bind(int, struct sockaddr*, socklen_t) override;
         int wrapper_tcp_connect(int, struct sockaddr*, socklen_t) override;
