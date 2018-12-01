@@ -27,9 +27,9 @@ namespace applications
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_receiveDatas.push(dataMessage);
-        m_condition.notify_one();
-
         LOG_DEBUG_MSG("data message : {}", dataMessage.c_str());
+
+        m_condition.notify_one();
     }
 
     std::string ClientReceiver::getDataMessage()

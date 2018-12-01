@@ -56,7 +56,6 @@ namespace endpoints
         void setTcpInitialMessage();
 
     private:
-        std::vector<uint8_t> m_dataBuffer{};
         int m_socketfId;
         configuration::TcpConfiguration m_tcpConfiguration;
         std::thread m_connectThread;

@@ -10,7 +10,7 @@ namespace player
     CodeConverter::CodeConverter(const char* fromCharset, const char* toCharset)
     {
         m_iconv = iconv_open(toCharset, fromCharset);
-        if(0 == m_iconv)
+        if(m_iconv <= 0)
         {
             LOG_ERROR_MSG("Iconv open filed.");
         }
@@ -21,11 +21,15 @@ namespace player
         iconv_close(m_iconv);
     }
 
-    int CodeConverter::decodeCoverter(char* input, unsigned int inLen,
-                      char* output, unsigned int outLen)
+    int CodeConverter::decodeCoverter(char* input, size_t inLen,
+                      char* output, size_t outLen)
     {
-        return iconv(m_iconv, &input, reinterpret_cast<size_t*>(&inLen),
-        &output, reinterpret_cast<size_t*>(&outLen));
+        int res = iconv(m_iconv, &input, &inLen, &output, &outLen);
+        if(res < 0)
+        {
+            LOG_ERROR_MSG("Decode cover failed error : {}", errno);
+        }
+        return res;
     }
 
     std::wstring CodeConverter::stringToWstring(const std::string& strData)

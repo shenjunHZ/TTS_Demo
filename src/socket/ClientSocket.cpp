@@ -34,8 +34,7 @@ namespace endpoints
                                const configuration::AppConfiguration& config,
                                const configuration::AppAddresses& appAddress,
                                timerservice::TimerService& timerService)
-    : m_dataBuffer(BUFFER_SIZE)
-    , m_socketfId{-1}
+    : m_socketfId{-1}
     , m_tcpConfiguration{tcpConfiguration}
     , m_socketSysCall{sysCall}
     , m_logger{logger}
@@ -270,23 +269,29 @@ namespace endpoints
         struct msghdr msg;
         msg.msg_name = nullptr;
         struct iovec io; // return data
-        //m_dataBuffer.clear();
-        io.iov_base = m_dataBuffer.data();
+        std::vector<uint8_t> receiveDataBuffer(BUFFER_SIZE);
+        io.iov_base = receiveDataBuffer.data();
         io.iov_len = BUFFER_SIZE;
         msg.msg_iov = &io;
         msg.msg_iovlen = 1;
 
-        const int size = m_socketSysCall.wrapper_tcp_recvmsg(m_socketfId, &msg, 0);
+        const uint64_t size = m_socketSysCall.wrapper_tcp_recvmsg(m_socketfId, &msg, 0);
+        if(size >= static_cast<int>(BUFFER_SIZE))
+        {
+            LOG_ERROR_MSG("Exceed maximum buffer size.");
+            return;
+        }
         if(size > 0)
         {
             LOG_INFO_MSG(m_logger, "Received {} bytes from {} : {}", size,
                          m_endpointAddress.ipAddress, m_endpointAddress.portNumber);
 
-            player::CodeConverter codeConverter("gb2312", "utf-8");
-            std::unique_ptr<char*> dataBuffer = std::make_unique<char*>(new char[size * 2 + 1]);
-            memset(*dataBuffer, 0 , size + 1);
+            player::CodeConverter codeConverter("gb2312", "utf-8//TRANSLIT//IGNORE");
+            std::shared_ptr<char*> dataBuffer = std::make_shared<char*>(new char[size * 2 + 1]);
+            memset(*dataBuffer, 0 , size * 2 + 1);
 
-            codeConverter.decodeCoverter(reinterpret_cast<char*>(m_dataBuffer.data()), size, *dataBuffer, size * 2 + 1);
+            codeConverter.decodeCoverter(reinterpret_cast<char*>(receiveDataBuffer.data()), reinterpret_cast<size_t>(size),
+                                         *dataBuffer, reinterpret_cast<size_t>(size * 2 + 1));
             m_dataListener.onDataMessage(*dataBuffer); // to do gsl
         }
         else
