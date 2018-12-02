@@ -35,8 +35,8 @@ namespace applications
         bool m_bAudioData{false};
         std::unique_ptr<timerservice::IOService> m_ioService;
         std::unique_ptr<timerservice::TimerService> m_timerService;
-        std::unique_ptr<KDTTSService> m_kdTTSService{nullptr};
-        std::unique_ptr<player::AlsaPlayer> m_alsaPlayer{nullptr};
+        std::unique_ptr<ITTSService> m_kdTTSService{nullptr};
+        std::unique_ptr<player::IPlayer> m_alsaPlayer{nullptr};
         std::mutex m_mutex;
 
         ClientReceiver m_clientReceiver;

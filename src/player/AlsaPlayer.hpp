@@ -7,6 +7,7 @@
 #include <memory>
 #include "logger/Logger.hpp"
 #include "configurations/AppConfiguration.hpp"
+#include "IPlayer.hpp"
 
 extern "C"
 {
@@ -15,12 +16,12 @@ extern "C"
 
 namespace player
 {
-    class AlsaPlayer
+    class AlsaPlayer : public IPlayer
     {
     public:
         AlsaPlayer(Logger& logger, configuration::wave_pcm_hdr& wavHdr, const std::string& filePath);
 
-        void playAudioFile();
+        void playAudioFile() override;
 
     private:
         int sndPcmOpen(snd_pcm_t** playbackHandle);
@@ -40,12 +41,10 @@ namespace player
     private:
         configuration::wave_pcm_hdr m_wavHdr;
         std::string m_filePath;
-        std::unique_ptr<char*> m_dataBuffer{nullptr}; // need care this ptr
+        //std::shared_ptr<char*> m_dataBuffer{nullptr}; // need care this ptr
 
         snd_pcm_uframes_t m_frames;
         snd_pcm_uframes_t m_periodSize;
-        //snd_pcm_t* m_pPlaybackHandle; // pcm device handler
-        //snd_pcm_hw_params_t* m_pHwParams{nullptr}; // hw info and config pcm
         Logger& m_logger;
     };
 }

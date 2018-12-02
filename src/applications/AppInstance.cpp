@@ -104,9 +104,9 @@ namespace applications
             if(0 < dataMessage.length())
             {
                 //LOG_DEBUG_MSG("tts data : {} length: {}", dataMessage.c_str(), dataMessage.length());
+               // std::lock_guard<std::mutex> lock(m_mutex);
                 if(m_kdTTSService->TTSCompound(dataMessage))
                 {
-                    std::lock_guard<std::mutex> lock(m_mutex);
                     m_bAudioData = true;
                     m_alsaPlayer->playAudioFile();
                 }
@@ -124,8 +124,8 @@ namespace applications
         {
             if (m_bAudioData and m_alsaPlayer)
             {
-                m_alsaPlayer->playAudioFile();
                 std::lock_guard<std::mutex> lock(m_mutex);
+                m_alsaPlayer->playAudioFile();
                 m_bAudioData = false;
             }
             else
@@ -140,10 +140,9 @@ namespace applications
         if(m_bLoginSDK)
         {
             m_threadTTSService = std::thread(&AppInstance::threadTTSService, this);
+           // m_threadAudioPLay = std::thread(&AppInstance::threadAudioPlay, this);
         }
 
         m_clientReceiver.receiveLoop();
-
-        //m_threadAudioPLay = std::thread(&AppInstance::threadAudioPlay, this);
     }
 } // namespace applications
