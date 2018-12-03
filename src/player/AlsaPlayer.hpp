@@ -38,6 +38,8 @@ namespace player
 
         void writeDataPCM(FILE* fp, snd_pcm_t* playbackHandle);
 
+        void runRecovery(snd_pcm_t* playbackHandle, int error);
+
     private:
         configuration::wave_pcm_hdr m_wavHdr;
         std::string m_filePath;

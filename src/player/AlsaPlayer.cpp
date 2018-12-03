@@ -164,6 +164,36 @@ namespace player
         LOG_DEBUG_MSG("nDataBytes: {}", m_wavHdr.data_size);
     }
 
+    void AlsaPlayer::runRecovery(snd_pcm_t* playbackHandle, int error)
+    {
+        if(-EPIPE == error)
+        {
+            error = snd_pcm_prepare(playbackHandle);
+        }
+
+        if(error < 0)
+        {
+            LOG_ERROR_MSG("error from writei: {}", snd_strerror(error));
+            return;
+        }
+        else if(-ESTRPIPE == error)
+        {
+            while(-EAGAIN == (error = snd_pcm_resume(playbackHandle)))
+            {
+                sleep(1);
+            }
+            if(error < 0)
+            {
+                error = snd_pcm_prepare(playbackHandle);
+                if(error < 0)
+                {
+                    LOG_ERROR_MSG("cannot recovery form suspend prepare fiailed: {}", snd_strerror(error));
+                }
+            }
+        }
+        return;
+    }
+
     void AlsaPlayer::writeDataPCM(FILE* fp, snd_pcm_t* playbackHandle)
     {
         char* dataBuffer = new char[m_frames * 2 + 1];
@@ -181,17 +211,18 @@ namespace player
             while((ret = snd_pcm_writei(playbackHandle, dataBuffer, m_frames)) < 0)
             {
                 usleep(2000);
-                if (ret == -EPIPE)
-                {
-                    // Broken pipe
-                    LOG_ERROR_MSG("under run occurred.");
-                    // prepare hw the parameters
-                    snd_pcm_prepare(playbackHandle);
-                }
-                else if (ret < 0)
-                {
-                    LOG_ERROR_MSG("error from writei: {}", snd_strerror(ret));
-                }
+                runRecovery(playbackHandle, ret);
+//                if (ret == -EPIPE)
+//                {
+//                    // Broken pipe
+//                    LOG_ERROR_MSG("under run occurred.");
+//                    // prepare hw the parameters
+//                    snd_pcm_prepare(playbackHandle);
+//                }
+//                else if (ret < 0)
+//                {
+//                    LOG_ERROR_MSG("error from writei: {}", snd_strerror(ret));
+//                }
             }
         }
         // close PCM handler
