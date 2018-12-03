@@ -274,8 +274,11 @@ namespace endpoints
         io.iov_len = BUFFER_SIZE;
         msg.msg_iov = &io;
         msg.msg_iovlen = 1;
-
+#ifdef RUN_IN_ARM
+        const unsigned int size = m_socketSysCall.wrapper_tcp_recvmsg(m_socketfId, &msg, 0);
+#else
         const uint64_t size = m_socketSysCall.wrapper_tcp_recvmsg(m_socketfId, &msg, 0);
+#endif
         if(size >= static_cast<int>(BUFFER_SIZE))
         {
             LOG_ERROR_MSG("Exceed maximum buffer size.");

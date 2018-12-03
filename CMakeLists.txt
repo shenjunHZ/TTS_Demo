@@ -4,9 +4,9 @@ cmake_minimum_required(VERSION 3.4)
 project(kdDemo)
 set(EXECUTABLE_NAME "kdDemo")
 
-if ( CMAKE_C_COMPILER MATCHES "gcc$")
-    set(GCC_LINUX TRUE)
-    include(./make/gnu/sanitizers.cmake)
+if ( ${CMAKE_C_COMPILER} MATCHES "/home/shenjun/tools/gcc-linaro-5.4.1-2017.01-i686_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc")
+    set(ARM_LINUX TRUE)
+    add_definitions(-DRUN_IN_ARM)
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
@@ -19,17 +19,17 @@ endif()
 #find_package(Boost 1.65.0 REQUIRED COMPONENTS system filesystem)
 
 #find_package(Zmq REQUIRED)
-if(${GCC_LINUX})
-    LINK_DIRECTORIES(
-            ${CMAKE_CURRENT_LIST_DIR}/linux_aisound_exp1218_5be7bc2b/libs/x64
-            /hmoe/shenjun/tools/alsa-lib-1.1.6/gcc-alsa/lib
-            /home/shenjun/tools/boost_1_65_0/gcc/lib
-    )
-else()
+if(${ARM_LINUX})
     LINK_DIRECTORIES(
             ${CMAKE_CURRENT_LIST_DIR}/linux_aisound_exp1218_5be7bc2b/libs/arm32
             /home/shenjun/tools/alsa-lib/arm-alsa/lib
             /home/shenjun/tools/boost_1_65_0/arm/lib
+    )
+else()
+    LINK_DIRECTORIES(
+            ${CMAKE_CURRENT_LIST_DIR}/linux_aisound_exp1218_5be7bc2b/libs/x64
+            /hmoe/shenjun/tools/alsa-lib-1.1.6/gcc-alsa/lib
+            /home/shenjun/tools/boost_1_65_0/gcc/lib
     )
 endif()
 
