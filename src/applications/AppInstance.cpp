@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include "AppInstance.hpp"
 #include "DefaultTimerService.hpp"
+#include "player/SystemPlayer.hpp"
 
 namespace
 {
@@ -45,6 +46,15 @@ namespace
         return ".";
     }
 
+    bool getEnablePlayTool(const configuration::AppConfiguration& config)
+    {
+        if(config.find(configuration::enablePlayTool) != config.end())
+        {
+            return config[configuration::enablePlayTool].as<bool>();
+        }
+        return false;
+    }
+
     std::atomic_bool keep_running(true);
 }
 
@@ -64,7 +74,14 @@ namespace applications
         m_kdTTSService = std::make_unique<KDTTSService>(logger, loginParams, sessionParams, strFileName);
         configuration::wave_pcm_hdr wavHdr;
         std::string strFilePath = getWavFilePath(config);
-        m_alsaPlayer = std::make_unique<player::AlsaPlayer>(logger, wavHdr, strFilePath + strFileName);//loginParams.work_dir + "/ttsAudio.wav");
+        if(not getEnablePlayTool(config))
+        {
+            m_alsaPlayer = std::make_unique<player::AlsaPlayer>(logger, wavHdr, strFilePath + strFileName);//loginParams.work_dir + "/ttsAudio.wav");
+        }
+        else
+        {
+            m_alsaPlayer = std::make_unique<player::SystemPlayer>(logger, strFilePath + strFileName);
+        }
 
         initService();
     }

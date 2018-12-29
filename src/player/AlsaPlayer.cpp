@@ -110,7 +110,8 @@ namespace player
 
         /* Set period size to 32 frames. */
         m_frames = 32;
-        ret = snd_pcm_hw_params_set_buffer_size_near(playbackHandle, hwParams, &m_frames);
+        m_periodSize = m_frames;
+        ret = snd_pcm_hw_params_set_buffer_size_near(playbackHandle, hwParams, &m_periodSize);
         if (0 > ret)
         {
             LOG_ERROR_MSG("Unable to set buffer size {} : {}", m_frames * 2, snd_strerror(ret));
@@ -125,19 +126,19 @@ namespace player
             return ret;
         }
 
-        // set hw_params
-        ret = snd_pcm_hw_params(playbackHandle, hwParams);
-        if (0 > ret)
-        {
-            LOG_ERROR_MSG("snd_pcm_hw_params {}", snd_strerror(ret));
-            return ret;
-        }
-
         /* Use a buffer large enough to hold one period */
         ret = snd_pcm_hw_params_get_period_size(hwParams, &m_frames, &dir);
         if (0 > ret)
         {
             LOG_ERROR_MSG("snd_pcm_hw_params_get_period {}", snd_strerror(ret));
+            return ret;
+        }
+
+        // set hw_params
+        ret = snd_pcm_hw_params(playbackHandle, hwParams);
+        if (0 > ret)
+        {
+            LOG_ERROR_MSG("snd_pcm_hw_params {}", snd_strerror(ret));
             return ret;
         }
 
@@ -212,23 +213,12 @@ namespace player
             {
                 usleep(2000);
                 runRecovery(playbackHandle, ret);
-//                if (ret == -EPIPE)
-//                {
-//                    // Broken pipe
-//                    LOG_ERROR_MSG("under run occurred.");
-//                    // prepare hw the parameters
-//                    snd_pcm_prepare(playbackHandle);
-//                }
-//                else if (ret < 0)
-//                {
-//                    LOG_ERROR_MSG("error from writei: {}", snd_strerror(ret));
-//                }
             }
         }
         // close PCM handler
         snd_pcm_drain(playbackHandle);
         snd_pcm_close(playbackHandle);
-        delete dataBuffer;
+        delete [] dataBuffer;
     }
 
     void AlsaPlayer::playAudioFile()
@@ -236,6 +226,16 @@ namespace player
         snd_pcm_t* playbackHandle = nullptr; // pcm device handler
         snd_pcm_hw_params_t* hwParams = nullptr; // hw info and config pcm
         FILE* fp = nullptr;
+
+        memset(&m_wavHdr, 0, sizeof(m_wavHdr));
+        fp = fopen(m_filePath.c_str(), "rb");
+        if (nullptr == fp)
+        {
+            LOG_ERROR_MSG("open {} error.", m_filePath.c_str());
+            return;
+        }
+        size_t size = fread(&m_wavHdr, 1, sizeof(m_wavHdr), fp);
+        printWavHdr(size);
 
         if(0 > sndPcmOpen(&playbackHandle))
         {
@@ -259,16 +259,6 @@ namespace player
             snd_pcm_close(playbackHandle);
             return;
         }
-
-        fp = fopen(m_filePath.c_str(), "rb");
-        if (nullptr == fp)
-        {
-            LOG_ERROR_MSG("open {} error.", m_filePath.c_str());
-            return;
-        }
-        memset(&m_wavHdr, 0, sizeof(m_wavHdr));
-        size_t size = fread(&m_wavHdr, 1, sizeof(m_wavHdr), fp);
-        printWavHdr(size);
 
         writeDataPCM(fp, playbackHandle);
         fclose(fp);

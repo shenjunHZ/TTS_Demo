@@ -21,7 +21,8 @@ namespace
             (configuration::connectTimer, value<unsigned>()->default_value(10), "connect timer period")
             (configuration::ttsWorkDir, value<std::string>()->default_value("."), "tts work dir")
             (configuration::wavFilePath, value<std::string>()->default_value("."), "wav output file path")
-            (configuration::wavFileName, value<std::string>()->default_value("ttsAudio.wav"), "wav file name");
+            (configuration::wavFileName, value<std::string>()->default_value("ttsAudio.wav"), "wav file name")
+            (configuration::enablePlayTool, value<bool>()->default_value(false), "enable play tool in system");
 
         return description;
     }

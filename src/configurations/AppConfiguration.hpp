@@ -24,6 +24,7 @@ namespace configuration
     constexpr auto connectTimer  = TIMER_CONFIG_PREFIX ".connectTimer";
     constexpr auto wavFilePath   = ALSA_CONFIG_PREFIX ".wavFilePath";
     constexpr auto wavFileName   = ALSA_CONFIG_PREFIX ".wavFileName";
+    constexpr auto enablePlayTool = ALSA_CONFIG_PREFIX ".enablePlayTool";
 }
 
 

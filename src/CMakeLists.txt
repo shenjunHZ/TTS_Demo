@@ -10,7 +10,8 @@ set (SOURCES
         socket/ClientSocket.cpp
         configurations/ConfigurationLoader.cpp
         player/AlsaPlayer.cpp
-        player/CodeConverter.cpp)
+        player/CodeConverter.cpp
+        player/SystemPlayer.cpp)
 
 set(INCLUDES
         ${CMAKE_CURRENT_LIST_DIR}/../include
